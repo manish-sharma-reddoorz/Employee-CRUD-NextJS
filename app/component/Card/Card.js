@@ -23,62 +23,95 @@ export default function Card({
     lastName,
     email,
     heading,
-    onDelete
-
+    onDelete,
+    addButton,
+    toggleModalView,
+    getCardIdAndOpenUpdateModal
 }) {
   return (
 
-    <div className='card flex-row-center'>
+    <div className={`card flex-row-center ${addButton ? 'dashed-border' : ''}`} onClick={() =>{
+      toggleModalView('add');
+    }}>
 
-
-        <div className="image-container">
-            {
-              imageUrl ? 
-                (<img src={imageUrl} alt="employee image"/> )
-                :
-                (<box-icon type='solid' name='user' size="lg"></box-icon>)
-            }
-        </div>
-
-        <div className="flex-row-center form-group id">
-          {id}
-        </div>
-
-        <div className="flex-row-center form-group firstName">
-          {firstName}
-        </div>
-        
-
-        <div className="flex-row-center form-group lastName">
-          {lastName}
-        </div>
-
-
-        <div className=" flex-row-center form-group email">
-          {email}
-        </div>
-
-
-        <div className="flex-row-center button-container">
-          {
-            heading ? (<>
-
-              <div className="edit-button">
-                  <button><box-icon name='pencil'></box-icon></button>
-                  
+        {
+          addButton ? (
+            <>
+              <div className="flex-row-center add-button" style={{
+                width: "1250px",
+              }}>
+                <button className='flex-row-center' style={{
+                  backgroundColor: "transparent",
+                  gap: '5px',
+                  width: "fit-content",
+                 
+                }}><box-icon name='plus-circle' size="md" color="#777373"></box-icon></button>
               </div>
-              <div className=" delete-button">
-                <button onClick = {() => {
-                  onDelete(id)
-                }} ><box-icon name='trash'></box-icon></button>
-              </div>
-            </>)
-            : 
-            (
-              "Actions"
-            )
-          }
-        </div>
+            </>
+          )
+
+          :
+
+          (
+            <>
+
+                <div className="image-container">
+                    {
+                      imageUrl ? 
+                        (<img src={imageUrl} alt="employee image"/> )
+                        :
+                        (<box-icon type='solid' name='user' size="lg"></box-icon>)
+                    }
+                </div>
+
+                <div className="flex-row-center form-group id">
+                  {id}
+                </div>
+
+                <div className="flex-row-center form-group firstName">
+                  {firstName}
+                </div>
+                
+
+                <div className="flex-row-center form-group lastName">
+                  {lastName}
+                </div>
+
+
+                <div className=" flex-row-center form-group email">
+                  {email}
+                </div>
+
+
+                <div className="flex-row-center button-container">
+                  {
+                    heading ? (<>
+
+                      <div className="edit-button">
+                          <button onClick={(event) => {
+                            event.stopPropagation();
+                            getCardIdAndOpenUpdateModal(id)
+                          }}><box-icon name='pencil'></box-icon></button>
+                          
+                      </div>
+                      <div className=" delete-button">
+                        <button onClick = {(event) => {
+                          event.stopPropagation();
+                          onDelete(id)
+                        }} ><box-icon name='trash'></box-icon></button>
+                      </div>
+                    </>)
+                    : 
+                    (
+                      "Actions"
+                    )
+                  }
+                </div>
+            </>
+          )
+
+        }
+
        
     </div>
   )

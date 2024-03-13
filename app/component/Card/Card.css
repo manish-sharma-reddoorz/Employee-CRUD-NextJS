@@ -8,9 +8,21 @@
 .card {
     gap: 20px;
     width:fit-content;
+    height: 100px;
     padding: 10px;  
     border: 1px solid black;  
     border-radius: 10px;
+}
+
+.dashed-border {
+    border: 2px dashed #777373;
+    background-color: lightgray;
+    transition: 0.3s ease-in-out;
+}
+
+.dashed-border:hover {
+    background-color: #c0bbbb;
+    cursor: pointer;
 }
 
 .image-container {
